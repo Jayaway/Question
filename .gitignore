@@ -34,3 +34,6 @@ build/
 
 # DeepSeek
 .deepseek/
+
+# Claude Code (oh-my-claudecode) internal state
+.omc/
