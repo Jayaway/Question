@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OQ 问卷系统</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark">OQ</span>
+          <div>
+            <strong>问卷系统</strong>
+            <small>Survey workspace</small>
+          </div>
+        </div>
+
+        <nav class="nav-tabs" aria-label="主导航">
+          <button class="nav-tab active" data-view="answer" type="button">填写问卷</button>
+          <button class="nav-tab" data-view="stats" type="button">数据统计</button>
+          <button class="nav-tab" data-view="manage" type="button">题目管理</button>
+        </nav>
+
+        <section class="side-panel">
+          <label for="surveyId">问卷 ID</label>
+          <div class="id-loader">
+            <input id="surveyId" inputmode="numeric" value="1" />
+            <button id="loadSurvey" type="button">载入</button>
+          </div>
+          <p class="hint">默认数据来自 `data.sql` 的校园食堂满意度调查。</p>
+        </section>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Online Questionnaire</p>
+            <h1 id="surveyTitle">校园食堂满意度调查</h1>
+            <p id="surveyDescription" class="description">正在读取问卷内容...</p>
+          </div>
+          <div class="status-strip" aria-live="polite">
+            <span id="statusDot" class="status-dot"></span>
+            <span id="statusText">连接中</span>
+          </div>
+        </header>
+
+        <section id="answerView" class="view active">
+          <div class="section-head">
+            <div>
+              <h2>匿名填写</h2>
+              <p>支持单选、多选和开放文本题，提交后自动进入统计。</p>
+            </div>
+            <button id="resetAnswer" class="ghost-button" type="button">清空</button>
+          </div>
+          <form id="answerForm" class="question-list"></form>
+        </section>
+
+        <section id="statsView" class="view">
+          <div class="section-head">
+            <div>
+              <h2>结果概览</h2>
+              <p>选择题展示票数分布，文本题展示最近收集到的建议。</p>
+            </div>
+            <button id="refreshStats" class="ghost-button" type="button">刷新</button>
+          </div>
+          <div id="statsSummary" class="metric-row"></div>
+          <div id="statsList" class="stats-list"></div>
+        </section>
+
+        <section id="manageView" class="view">
+          <div class="section-head">
+            <div>
+              <h2>题目管理</h2>
+              <p>为当前问卷新增、编辑或删除题目。</p>
+            </div>
+          </div>
+
+          <form id="questionForm" class="editor-grid">
+            <input type="hidden" id="editingId" />
+            <label>
+              题目标题
+              <input id="questionTitle" required placeholder="请输入题目内容" />
+            </label>
+            <label>
+              题目类型
+              <select id="questionType">
+                <option value="1">单选题</option>
+                <option value="2">多选题</option>
+                <option value="3">文本题</option>
+              </select>
+            </label>
+            <label>
+              排序
+              <input id="sortOrder" type="number" min="0" value="1" />
+            </label>
+            <label class="checkbox-label">
+              <input id="requiredFlag" type="checkbox" checked />
+              必填
+            </label>
+            <label class="wide-field">
+              选项
+              <textarea id="questionOptions" rows="4" placeholder="一行一个选项；文本题可留空"></textarea>
+            </label>
+            <div class="form-actions">
+              <button id="cancelEdit" class="ghost-button" type="button">取消编辑</button>
+              <button type="submit">保存题目</button>
+            </div>
+          </form>
+
+          <div id="questionTable" class="question-table"></div>
+        </section>
+      </main>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>
