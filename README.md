@@ -1,9 +1,13 @@
-# OQ 问卷系统
+# OQ Backend
 
-项目已拆分为后端和前端两个部分：
+Spring Boot 问卷系统后端，提供 `/api/**` 接口。
 
-- 后端：Spring Boot，位于项目根目录，提供 `/api/**` 接口。
-- 前端：Vite，位于 `frontend/`，通过代理访问后端接口。
+## 技术栈
+
+- Spring Boot
+- MyBatis-Plus
+- MySQL
+- Spring Security
 
 ## 启动后端
 
@@ -13,14 +17,12 @@
 
 默认地址：`http://localhost:8080`
 
-## 启动前端
+## 数据库
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+默认连接配置在 `src/main/resources/application.properties`：
 
-默认地址：`http://localhost:5173`
+- 数据库：`survey_system`
+- 用户名：`root`
+- 密码：`123456`
 
-开发环境中，Vite 会把 `/api` 请求代理到 `http://localhost:8080`。
+启动时会读取 `schema.sql` 和 `data.sql` 初始化示例数据。
